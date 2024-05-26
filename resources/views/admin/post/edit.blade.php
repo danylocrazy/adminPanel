@@ -1,6 +1,6 @@
 @extends('layouts.admin_layout')
 
-@section('title', 'Добавить статью')
+@section('title', 'Редактировать статью')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Добавить статью</h1>
+                    <h1 class="m-0">Редактировать статью {{ $post['title']}} </h1>
                 </div><!-- /.col -->
             </div><!-- /.row -->
             @if (session('success'))
@@ -28,12 +28,13 @@
                 <div class="col-lg-12">
                     <div class="card card-primary">
                         <!-- form start -->
-                        <form action="{{ route('post.store') }}" method="POST">
+                        <form action="{{ route('post.update', $post['id']) }}" method="POST">
                             @csrf
+                            @method('PUT')
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Название</label>
-                                    <input type="text" name="title" class="form-control" id="exampleInputEmail1"
+                                    <label for="exampleInputEmail1" >Название</label>
+                                    <input type="text" value="{{ $post['title'] }}" name="title" class="form-control" id="exampleInputEmail1"
                                         placeholder="Введите название статьи" required>
                                 </div>
                                 <div class="form-group">
@@ -41,7 +42,9 @@
                                         <label>Выберите категорию</label>
                                         <select name="cat_id" class="form-control" required>
                                             @foreach ($categories as $category)
-                                            <option value="{{ $category['id']}}"> {{ $category['title']}} </option>
+                                                <option value="{{ $category['id'] }}" 
+                                                @if($category['id'] == $post['cat_id']) selected
+                                                @endif> {{ $category['title']}} </option>
                                             @endforeach
                                         </select>
                                         </div>

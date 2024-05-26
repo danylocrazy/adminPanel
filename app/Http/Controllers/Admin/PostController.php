@@ -77,7 +77,7 @@ class PostController extends Controller
         // $post->img = $request->img;
         $post->cat_id = $request->cat_id;
         $post->save();
-        
+
         return redirect()->back()->withSuccess('Статься успешно обновлена!');
     }
 
@@ -86,6 +86,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return redirect()->back()->withSuccess('Статья была успешно удалена!');
     }
 }
